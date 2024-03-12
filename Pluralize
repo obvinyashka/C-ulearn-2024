@@ -1,0 +1,32 @@
+namespace Pluralize
+{
+    public static class PluralizeTask
+    {
+        public static string PluralizeRubles(int count)
+        {
+            if (count < 10 || count > 20 && count < 100)
+            {
+                var cash = count % 10;
+                return (cash > 1 && cash < 5) ? "рубля" : ((cash > 4 || cash == 0) ? "рублей" : "рубль");
+            }
+            else
+            {
+                while (true) //Тута цикл, хотя бы прочитай чё делает.
+                {
+                    count %= 100;
+                    if (count < 100) break;
+                }
+
+                if (count < 10 || count > 20 && count < 100)
+                {
+                    var cash = count % 10;
+                    return (cash > 1 && cash < 5) ? "рубля" : ((cash > 4 || cash == 0) ? "рублей" : "рубль");
+                }
+                else
+                    return "рублей";
+            }
+        }
+    }
+}
+Внимание, используется цикл. В ветвлениях ещё не изучен.
+﻿На пространстве все друг у друга тараканят эту практику, так что не забудь поменять переменные.
