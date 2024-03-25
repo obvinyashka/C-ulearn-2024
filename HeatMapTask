@@ -1,0 +1,61 @@
+using System;
+ 
+namespace Names
+{
+    internal static class HeatmapTask
+    {
+        public static HeatmapData GetBirthsPerDateHeatmap(NameData[] names){
+            int i = 2;
+            string[] days = new string[30];
+            string[] months = new string[12];
+            while (i<=31){ days[i-2] = i.ToString();  i++;  }
+            i = 1;
+            while (i<=12) {months[i-1] = i.ToString(); i++; }
+            double[,] heat = new double[30,12]; i = 0;
+            while (i<30){
+                double[]c = new double[12];
+                foreach (var name in names)
+                    if (name.BirthDate.Day == i+2)
+                        c[name.BirthDate.Month - 1] = c[name.BirthDate.Month - 1] + 1;
+                    int j = 0;
+                while(j<12) { heat[i, j] = c[j]; j++; }
+                i++;
+            }          
+            return new HeatmapData("Пример карты интенсивностей",
+            heat, days, months);
+        }
+    }
+}
+\\\\\\\
+﻿using System;
+
+
+namespace Names
+{
+    internal static class HeatmapTask
+    {
+        public static HeatmapData GetBirthsPerDateHeatmap(NameData[] names)
+        {
+            var minDay = 2;
+            var maxDay = 31;
+            var days = new string[maxDay - minDay + 1];
+            for (var i = 0; i < days.Length; i++)
+                days[i] = (i + minDay).ToString();
+            var minMonth = 1;
+            var maxMonth = 12;
+            var months = new string[maxMonth];
+
+            for (var i = 0; i < months.Length; i++)
+                months[i] = (i + minMonth).ToString();
+            var birthCounts = new double[days.Length, months.Length];
+
+            foreach (var name in names)
+            {
+                if (name.BirthDate.Day > 1)
+                    birthCounts[(name.BirthDate.Day - minDay), (name.BirthDate.Month - minMonth)]++;
+            }
+
+            return new HeatmapData("Карта интенсивностей рождаемости", birthCounts, days, months);
+        }
+    }
+}
