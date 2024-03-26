@@ -112,3 +112,34 @@ namespace Names
         }
     }
 }
+Не лайк, тоже развернули, вот вам супер-мини-краткий кодик
+using System;
+
+namespace Names
+{
+    internal static class HeatmapTask
+    {
+        public static HeatmapData GetBirthsPerDateHeatmap(NameData[] names)
+        {
+            var days = new string[30];
+            var months = new string[12];
+            for (var i = 0; i < 30; i++)
+                days[i] = (i + 2).ToString();
+            for (var i = 0; i < 12; i++)
+                months[i] = (i + 1).ToString();
+            var heat = new double[30, 12];
+            for (var i = 0; i < 30; i++)
+                for (var j = 0; j < 12; j++)
+                    heat[i, j] = CountBirths(names, i + 2, j + 1);
+            return new HeatmapData("Пример карты интенсивностей", heat, days, months);
+        }
+
+        private static double CountBirths(NameData[] names, int day, int month)
+        {
+            var count = 0.0;
+            foreach (var name in names)
+                count += (name.BirthDate.Day == day && name.BirthDate.Month == month) ? 1 : 0;
+            return count;
+        }
+    }
+}
